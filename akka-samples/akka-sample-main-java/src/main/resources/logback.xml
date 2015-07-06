@@ -1,5 +1,15 @@
 <configuration>
 
+<appender name="FILE2" class="ch.qos.logback.core.FileAppender">
+    <file>testFile.log</file>
+    <append>true</append>
+    <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
 			by default -->
@@ -35,7 +45,7 @@
 	</appender>
 
 	<root level="INFO">
-		<appender-ref ref="FILE" />
+		<appender-ref ref="FILE2" />
 		<!-- <appender-ref ref="STDOUT" /> -->
 	</root>
 </configuration>
