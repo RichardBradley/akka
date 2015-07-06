@@ -1,0 +1,41 @@
+<configuration>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
+			by default -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<!-- Set the value via Mapped Diagnostic Context (MDC) in code. -->
+		<discriminator>
+			<key>logBasename</key>
+			<defaultValue>Test</defaultValue>
+		</discriminator>
+
+		<sift>
+			<appender name="FILE-${LogBasename}"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<fileNamePattern>log/application.log</fileNamePattern>
+					<maxHistory>30</maxHistory>
+					<timeBasedFileNamingAndTriggeringPolicy
+						class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+						<!-- or whenever the file size reaches 5MB -->
+						<maxFileSize>5MB</maxFileSize>
+					</timeBasedFileNamingAndTriggeringPolicy>
+				</rollingPolicy>
+				<encoder>
+				</encoder>
+			</appender>
+		</sift>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+		<!-- <appender-ref ref="STDOUT" /> -->
+	</root>
+</configuration>
